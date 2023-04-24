@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="styles.css">
+	<script defer src="./index.js"></script>
+	<script src="./template.js"></script>
+	<style>
+		.introModal {
+			position: fixed;
+			z-index: 2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, .1);
+			backdrop-filter: blur(10px);
+		}
+
+		.introContainer {
+			width: 90%;
+			max-width: 1000px;
+			min-height: 60%;
+			background-color: white;
+			border-radius: 8px;
+			box-shadow: 0 2px 15px black;
+			border: 1px solid rgba(0, 0, 0, .8);
+			display: flex;
+			flex-direction: column;
+			padding: 10px 15px;
+		}
+
+		.introContainer>h1 {
+			text-align: center;
+			padding: 20px 0;
+		}
+
+		.introContainer p {
+			padding: 20px 15px;
+			font-size: 1.2em;
+		}
+
+		.introContainer>button {
+			background: var(--accent-color);
+			border: 0;
+			outline: 0;
+			padding: 15px 30px;
+			font-size: 1.5em;
+			border-radius: 5px;
+			cursor: pointer;
+			width: min-content;
+			align-self: center;
+			margin: 9px 0 5px 0 !important;
+		}
+
+		.introContainer>button:hover {
+			background: var(--accent-color-alpha)
+		}
+
+		.helpContainer{
+			position: fixed;
+			display: flex;
+			justify-content: center;
+			align-items: flex-end;
+			flex-direction: column;
+			top: 20px;
+			right: 20px;
+			border: 0;
+			background: 0;
+			outline: 0;
+			min-width: 200px;
+		}
+		.helpContainer::before{
+			content: '?';
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 3em;
+			cursor: pointer;
+			width: 80px;
+			height: 80px;
+			background-color: white;
+			box-shadow: 0 0 4px #ccc;
+			border: 8px solid #eee;
+			border-radius: 50%;
+			transition: all 100ms ease-out;
+		}
+		.helpContainer:hover::before{
+			transform: scale(1.2);
+		}
+		.helpContainer button{
+			display: none;
+			outline: 0;
+			margin-top: 25px;
+			border: 0;
+			background: white;
+			padding: 15px 25px;
+			border-radius: 5px;
+			min-width: 100%;
+			font-size: 1.3em;
+			cursor: pointer;
+			transition: all 100ms ease-out;
+		}
+		.helpContainer button:hover{
+			transform: scale(1.1);
+		}
+		.helpContainer:hover > button{
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<template data-js="intro-modal" data-type="modal" open>
+		<div class="introModal">
+			<div class="introContainer">
+				<h1>Introduction</h1>
+				<p>This is a simple demo of how a container can change layout based on the size of its parent and not
+					the viewport width or height.
+					<br /><br />This is usefull for dynamic containers that can be placed anywhere so having them
+					responsive to the viewport size is not an option.
+				</p>
+				<p>This is all done using only CSS and no Javascript</p>
+				<p>There are 3 examples. Each one has a resizable container and a threashold input you can change. Plus
+					a description of the default layout
+					<br /><br />
+					When the container width is bigger than the threashold, the default layout will be applied.
+					<br />For ex: 33%, 33%, 33% means the 3 elements (with red borders) will take each 33% of the
+					container
+					<br /><br />
+					When the container width is less than the threashold, the elements inside it will stack on top of
+					each other
+				</p>
+				<button data-type="close">Close</button>
+			</div>
+		</div>
+	</template>
+	<main>
+		<div class="helpContainer">
+			<button onclick="introModalComponent()">Show Introduction</button>
+		</div>
+		<div class="responsiveEqual card" data-js="responsiveEqual">
+			<div class="header">
+				<h2 class="title">Responsive layout 1 (33%, 33%, 33%)</h2>
+				<label>
+					Threshold
+					<input type="number" placeholder="px" />
+				</label>
+			</div>
+			<div class="container-wrapper">
+				<div class="container-size"></div>
+				<div class="container">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="responsiveUnequal card" data-js="responsiveUnequal">
+			<div class="header">
+				<h2 class="title">Responsive layout 2 (25%, 65%, 10%)</h2>
+				<label>
+					Threshold
+					<input type="number" placeholder="px" />
+				</label>
+			</div>
+			<div class="container-wrapper">
+				<div class="container-size"></div>
+				<div class="container">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div id="test">ASD</div>
+		<div class="responsiveDisplayHide card" data-js="responsiveDisplayHide">
+			<div class="header">
+				<h2 class="title">Responsive display / hide</h2>
+				<label>
+					Threshold
+					<input type="number" placeholder="px" />
+				</label>
+			</div>
+			<div class="container-wrapper">
+				<div class="container-size"></div>
+				<div class="container">
+					<label style="position: relative; margin: 20px 0; width: 100%;">
+						<input type="text" style="width: 100%;" placeholder="This is a normal input" />
+						<div class="responsive-hide"
+							style=" height: 19px; background-color: red; position: absolute; right: 15px; top: 3px;">
+						</div>
+					</label>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		const allModals = document.querySelectorAll('[data-type="modal"]')
+
+		const introModalComponent = ()=>{
+			const modal = renderTemplate(document.querySelector('[data-js="intro-modal"]'), document.body);
+			modal.querySelector('button').addEventListener('click', ()=>{
+				document.body.removeChild(modal)
+			})
+		}
+
+		introModalComponent();
+
+	</script>
+</body>
+
+</html>

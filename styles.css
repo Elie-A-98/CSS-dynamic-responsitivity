@@ -1,0 +1,137 @@
+:root{
+	--accent-color: rgb(147, 158, 255);
+	--accent-color-alpha: rgba(147, 158, 255, .8);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html{
+	height: 100%;
+}
+
+body{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: rgba(102, 117, 253, 0.933);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+main{
+	width: 50%;
+	padding: 30px 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+input{
+	border: 2px solid rgb(57, 76, 253);
+	border-radius: 5px;
+	background: white;
+	height: 100%;
+	max-height: 35px;
+	padding: 0 10px;
+	font-size: 1.1em;
+}
+input::placeholder{
+	opacity: 0.4;
+	font-size: .9em;
+}
+input:focus{
+	outline: 0;
+}
+
+label{
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+}
+label > input {
+	margin-left: 10px;
+}
+
+.card{
+	padding: 10px;
+}
+.card:not(:first-child){
+	margin-top: 50px;
+}
+.card > .header {
+	border-radius: 3px;
+	box-shadow: 0 0 10px rgb(209, 201, 201);
+	background: white;
+	display: flex;
+	justify-content: space-around;
+	margin: 18px 0;
+	padding: 15px;
+}
+.card > .header >  .title{
+	text-align: center;
+}
+
+.container-wrapper{
+	background: var(--accent-color);
+	border-radius: 3px;
+	box-shadow: 0 0 10px rgb(209, 201, 201);
+	position: relative;
+	resize: both;
+	overflow-x: auto;
+	height: auto;
+	padding: 3px 3px 35px 3px;
+}
+
+.container-wrapper > .container-size {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	color: grey;
+}
+
+.container{
+	background-color: white;
+	outline: 3px solid red;
+	display: flex;
+	flex-wrap: wrap;
+	--parentWidth: calc(100%);
+	--threshold: 0;
+}
+
+.responsiveEqual .item{
+	outline: 1px solid black;
+	height: 100px;
+	max-width: 100%;
+	min-width: 33%;
+	flex-grow: 1;
+}
+
+.responsiveUnequal .item, .responsiveEqual .item{
+	outline: 1px solid black;
+	height: 100px;
+	max-width: 100%;
+	flex-grow: 1;
+	flex-basis: calc((var(--threshold) - var(--parentWidth)) * 999);
+}
+.responsiveUnequal .item {
+	min-width: 65%;
+} 
+.responsiveUnequal .item:first-child {
+	min-width: 25%;
+}
+.responsiveUnequal .item:last-child {
+	min-width: 10%;
+}
+.responsiveEqual .item {
+	min-width: 33%;
+}
+
+.responsiveDisplayHide .responsive-hide {
+	width: clamp(0px, (var(--threshold) - var(--parentWidth)) * 999, 20px);
+	/* min-width: 0;
+	max-width: 20px;
+	width: calc((var(--threshold) - var(--parentWidth)) * 999); */
+}
